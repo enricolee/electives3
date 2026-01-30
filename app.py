@@ -9,7 +9,8 @@ st.title("Waste Type Classifier 🌱♻️🚫")
 # Load model
 @st.cache_resource
 def load_ml_model():
-    return load_model("model/waste_classifier_6class.h5")
+    return load_model("waste_classifier_6class.h5")
+
 
 model = load_ml_model()
 
