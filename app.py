@@ -40,13 +40,6 @@ if uploaded_file is not None:
         "trash": "Non-Biodegradable 🚫"
     }
     
-    label = class_labels[predicted_class]
-    category = waste_category_map[label]
-    
-    st.write(f"Predicted Class: **{label}**")
-    st.write(f"Waste Category: **{category}**")
-    st.write(f"Confidence: **{round(confidence*100,2)}%**")
-
 
 st.subheader("Live Camera Waste Detection 📷")
 
