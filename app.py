@@ -5,27 +5,14 @@ import numpy as np
 from PIL import Image
 
 st.title("Waste Combustibility Classifier 🔥🚫")
-st.write("Upload an image of waste to identify if it is **Combustible** or **Non-Combustible**.")
+st.write(
+    "Upload an image of waste to identify whether it is "
+    "**Combustible** or **Non-Combustible**."
+)
 
-# Class labels from trained 6-class model
-class_labels = {
-    0: "cardboard",
-    1: "glass",
-    2: "metal",
-    3: "paper",
-    4: "plastic",
-    5: "trash"
-}
-
-# Combustibility mapping
-combustibility_map = {
-    "cardboard": "🔥 Combustible",
-    "paper": "🔥 Combustible",
-    "plastic": "🔥 Combustible",
-    "trash": "🔥 Combustible",
-    "glass": "🚫 Non-Combustible",
-    "metal": "🚫 Non-Combustible"
-}
+# Internal class grouping (hidden from user)
+COMBUSTIBLE_CLASSES = [0, 3, 4, 5]      # cardboard, paper, plastic, trash
+NON_COMBUSTIBLE_CLASSES = [1, 2]        # glass, metal
 
 # Load model
 @st.cache_resource
@@ -53,12 +40,14 @@ if uploaded_file is not None:
     # Predict
     predictions = model.predict(img_array)
     predicted_class = np.argmax(predictions)
-    confidence = np.max(predictions)
+    confidence = float(np.max(predictions))
 
-    label = class_labels[predicted_class]
-    result = combustibility_map[label]
+    # Convert 6-class prediction into 2-class result
+    if predicted_class in COMBUSTIBLE_CLASSES:
+        result = "🔥 Combustible"
+    else:
+        result = "🚫 Non-Combustible"
 
-    # Display results
-    st.success(f"Detected Item: **{label.capitalize()}**")
-    st.write(f"Classification: **{result}**")
+    # Display results (ONLY 2 classes)
+    st.success(f"Classification: **{result}**")
     st.write(f"Confidence: **{round(confidence * 100, 2)}%**")
