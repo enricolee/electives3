@@ -4,9 +4,9 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 from PIL import Image
 
-st.title("Waste Type Classifier 🌱♻️🚫")
+st.title("Waste Combustibility Classifier 🔥🚫")
 
-# Class mappings
+# Class labels (from your trained model)
 class_labels = {
     0: "cardboard",
     1: "glass",
@@ -16,13 +16,14 @@ class_labels = {
     5: "trash"
 }
 
-waste_category_map = {
-    "cardboard": "Recyclable ♻️",
-    "paper": "Recyclable ♻️",
-    "plastic": "Non-Biodegradable🚫",
-    "metal": "Non-Biodegradable🚫",
-    "glass": "Non-Biodegradable🚫",
-    "trash": "Non-Biodegradable 🚫"
+# Combustible vs Non-Combustible mapping
+combustibility_map = {
+    "cardboard": "🔥 Combustible",
+    "paper": "🔥 Combustible",
+    "plastic": "🔥 Combustible",
+    "trash": "🔥 Combustible",
+    "glass": "🚫 Non-Combustible",
+    "metal": "🚫 Non-Combustible"
 }
 
 # Load model
@@ -49,11 +50,11 @@ if uploaded_file is not None:
     confidence = np.max(predictions)
 
     label = class_labels[predicted_class]
-    category = waste_category_map[label]
+    result = combustibility_map[label]
 
-    st.success(f"Detected: {label}")
-    st.write(f"Waste Category: {category}")
-    st.write(f"Confidence: {round(confidence*100,2)}%")
+    st.success(f"Detected Item: {label.capitalize()}")
+    st.write(f"Classification: **{result}**")
+    st.write(f"Confidence: **{round(confidence*100, 2)}%**")
 
 # -------------------- LIVE CAMERA --------------------
 st.subheader("Live Camera Waste Detection 📷")
@@ -72,8 +73,8 @@ if camera_image is not None:
     confidence = np.max(predictions)
 
     label = class_labels[predicted_class]
-    category = waste_category_map[label]
+    result = combustibility_map[label]
 
-    st.success(f"Detected: {label}")
-    st.write(f"Waste Category: {category}")
-    st.write(f"Confidence: {round(confidence*100,2)}%")
+    st.success(f"Detected Item: {label.capitalize()}")
+    st.write(f"Classification: **{result}**")
+    st.write(f"Confidence: **{round(confidence*100, 2)}%**")
