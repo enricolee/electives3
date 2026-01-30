@@ -19,9 +19,9 @@ class_labels = {
 waste_category_map = {
     "cardboard": "Recyclable ♻️",
     "paper": "Recyclable ♻️",
-    "plastic": "Recyclable ♻️",
-    "metal": "Recyclable ♻️",
-    "glass": "Recyclable ♻️",
+    "plastic": "Non-Biodegradable🚫",
+    "metal": "Non-Biodegradable🚫",
+    "glass": "Non-Biodegradable🚫",
     "trash": "Non-Biodegradable 🚫"
 }
 
